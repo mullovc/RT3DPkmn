@@ -13,17 +13,21 @@ public class Stats : MonoBehaviour {
 	public int maxHP;
 	public int expToNextLevel;
 	
-	public Move[] move = new Move[4];
+	public Pokedex.StatusEffect status;
+	
+	public Move move_prefab;
+	public Move[] move = new Move[5];
 	
 	void Start ()
 	{
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < 5; i++)
 		{
-			move[i] = new GameObject().AddComponent<Move>();
+			move[i] = Instantiate(move_prefab,transform.position,Quaternion.identity) as Move;
 			move[i].name = "Move" + i;
 			move[i].transform.parent = transform;
 			move[i].pokemon = pokemon;
 		}
+		learnMove(1);
 	}
 	
 	bool checkLevelUp()
@@ -58,7 +62,7 @@ public class Stats : MonoBehaviour {
 	
 	void learnMove(int moveToLearn)
 	{
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < 5; i++)
 		{
 			if(move[i].index == 0)
 			{

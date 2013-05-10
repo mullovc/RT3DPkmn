@@ -7,6 +7,8 @@ public class Battle : MonoBehaviour {
 	public Pokemon myPokemon;
 	public Pokemon opponent;
 	
+	public GameObject opponent_prefab;
+	
 	public int myPokemonIndex;
 	public int enemyPokemonIndex;
 	
@@ -14,7 +16,7 @@ public class Battle : MonoBehaviour {
 	{
 		loadBattleSetup();
 		myPokemon = pokedex.pokedex(myPokemon,myPokemonIndex);
-		opponent = pokedex.pokedex(opponent,enemyPokemonIndex,false);
+		spawnEnemy(enemyPokemonIndex);
 	}
 	
 	void loadBattleSetup()
@@ -40,17 +42,49 @@ public class Battle : MonoBehaviour {
 			defender = myPokemon;
 		}
 		
-		move.attack(defender.transform);
-		
-		int damage = move.damage * attacker.stats.level / defender.stats.level;		//provisorisch
+		move.attack(defender);
+	}
+	
+	public void hit(Pokemon attacker,Pokemon defender,Move move)
+	{
+		int damage = move.damage + attacker.stats.level - defender.stats.level;		//provisorisch
 		
 		defender.stats.HP -= damage;
 		
 		print(attacker.Name + " dealt " + damage + " damage to " + defender.Name + ", using " + move.Name);
+		
+		if(defender.stats.HP <= 0)
+			faint(attacker,defender);
 	}
+	
+	void faint(Pokemon winner,Pokemon loser)
+	{
+		Camera.main.GetComponent<CameraRotation>().lockOnEnemy = false;
+		loser.stats.status = Pokedex.StatusEffect.Fainted;
+		
+		winner.stats.exp += loser.stats.level * 10;									//provisorisch
+		
+		print (loser.Name + " fainted");
+		print (winner.Name + " gained " + loser.stats.level * 10 + " Exp");
+	}
+	
+	void spawnEnemy(int index)
+	{
+		GameObject enemy = Instantiate(opponent_prefab,new Vector3(0,0,50),Quaternion.Euler(new Vector3(0,180,0))) as GameObject;
+		if(pokedex.pokedex(enemy.GetComponentInChildren<Pokemon>(),index,false) != null)
+			opponent = pokedex.pokedex(enemy.GetComponentInChildren<Pokemon>(),index,false);
+		else
+			Destroy(enemy);
+	}
+	
+	
 	
 	void Update ()
 	{
-		
+		if(opponent == null)
+		{
+			System.Random rand = new System.Random();
+			spawnEnemy(rand.Next(1,10000));
+		}
 	}
 }

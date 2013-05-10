@@ -5,7 +5,6 @@ public class IngameMenu : MonoBehaviour {
 	
 	bool menuIsOpen;
 	
-	
 	void Start ()
 	{
 		Screen.lockCursor = true;

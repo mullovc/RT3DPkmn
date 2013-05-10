@@ -3,20 +3,18 @@ using System.Collections;
 
 public class CameraRotation : MonoBehaviour {
 	
-	public Movement movement;
 	Transform player;
 	public bool lockOnEnemy;
-	Transform enemy;
+	public Transform enemy;
 	public Settings settings;
 	
 	void Start ()
 	{
 		player = transform.parent;
-		enemy = Camera.main.GetComponent<Battle>().opponent.transform;
 		lockOnEnemy = true;
 	}
 	
-	void lockOn()
+	public void lockOn()
 	{
 		if(Input.GetKeyDown("tab"))
 		{
@@ -24,7 +22,7 @@ public class CameraRotation : MonoBehaviour {
 			{
 				lockOnEnemy = false;
 			}
-			else if(!lockOnEnemy)
+			else if(!lockOnEnemy && enemy != null)
 			{
 				lockOnEnemy = true;
 			}
@@ -59,38 +57,22 @@ public class CameraRotation : MonoBehaviour {
 	
 	void setCameraRotation(Vector3 looker, Vector3 lookedAt)
 	{
-		float alpha = calcDirection(looker,lookedAt);
-		float beta = calcTendency(lookedAt);
-		player.eulerAngles = new Vector3(0,alpha,0);
-		transform.eulerAngles = new Vector3(beta,alpha,0);
-	}
-	
-	float calcTendency(Vector3 a)
-	{
-		Vector3 b = a - transform.position;
-		return -Mathf.Atan(b.y/Mathf.Sqrt(b.z * b.z + b.x * b.x)) * (180/Mathf.PI);
-	}
-	
-	float calcDirection(Vector3 a,Vector3 b)
-	{
-		Vector3 c = b - a;
-		float alpha = Mathf.Atan(c.x/c.z) * (180/Mathf.PI);
-		if(c.z < 0)
-			alpha -= 180;
-		return alpha;
+		player.rotation = Quaternion.LookRotation(lookedAt - looker);
+		transform.rotation = Quaternion.LookRotation(lookedAt - transform.position);
 	}
 	
 	void Update ()
 	{
+		if(enemy == null && transform.GetComponent<Battle>().opponent != null)
+		{
+			enemy = transform.GetComponent<Battle>().opponent.transform;
+		}
+		
 		lockOn();
 		
 		if(lockOnEnemy)
-		{
 			setCameraRotation(player.position,enemy.position);
-		}
 		if(!lockOnEnemy)
-		{
 			setCameraPosition();
-		}
 	}
 }

@@ -13,49 +13,45 @@ public class Controls : MonoBehaviour {
 	
 	void Start ()
 	{
-		opponent = Camera.main.GetComponent<Battle>().opponent;
+		
 	}
 	
 	void OnGUI()
 	{
 		if(camRotation.lockOnEnemy)
 		{
-			GUI.skin.button.fontSize = 20;
-			GUI.skin.button.stretchHeight = true;
-			GUILayout.BeginArea(new Rect(Screen.width*0.75f,Screen.height*0.75f,Screen.width/4,Screen.height/4));
+			GUI.skin.box.fontSize = 12;
+			GUI.skin.box.stretchHeight = true;
+			GUI.skin.box.alignment = TextAnchor.MiddleCenter;
+			
+			GUILayout.BeginArea(new Rect(Screen.width * 0.75f,Screen.height * (5f/6f),Screen.width / 4,Screen.height / 6));
 			GUILayout.BeginHorizontal();
-			GUILayout.Space(Screen.width/16);
-			if(Input.GetKeyDown("up") || GUILayout.Button(pokemon.stats.move[0].Name,GUILayout.Width(Screen.width/8)))
-			{
-				pokemon.stats.move[0].triggerAttack();
-			}
+			
+			GUILayout.Space(Screen.width * (1f/32f));
+			GUILayout.Box("Q",GUILayout.Width(Screen.width * (5f/96f)));
+			GUILayout.Box(pokemon.stats.move[1].Name);
+			GUILayout.Box("E",GUILayout.Width(Screen.width * (5f/96f)));
+			GUILayout.Space(Screen.width * (1f/32f));
+			
 			GUILayout.EndHorizontal();
 			GUILayout.BeginHorizontal();
-			if(Input.GetKeyDown("left") || GUILayout.Button(pokemon.stats.move[1].Name))
-			{
-				pokemon.stats.move[1].triggerAttack();
-			}
-			if(Input.GetKeyDown("right") || GUILayout.Button(pokemon.stats.move[2].Name))
-			{
-				pokemon.stats.move[2].triggerAttack();
-			}
-			GUILayout.EndHorizontal();
-			GUILayout.BeginHorizontal();
-			GUILayout.Space(Screen.width/16);
-			if(Input.GetKeyDown("down") || GUILayout.Button(pokemon.stats.move[3].Name,GUILayout.Width(Screen.width/8)))
-			{
-				pokemon.stats.move[3].triggerAttack();
-			}
+			
+			GUILayout.Box(pokemon.stats.move[2].Name);
+			GUILayout.Box(pokemon.stats.move[3].Name);
+			GUILayout.Box(pokemon.stats.move[4].Name);
+			
 			GUILayout.EndHorizontal();
 			GUILayout.EndArea();
 		}
+		
+		GUI.skin.box.stretchHeight = false;
+		
 		GUILayout.BeginArea(new Rect(0,0,Screen.width / 6,Screen.height / 6));
 		
 		GUILayout.Label("Lv." + pokemon.stats.level + " " + pokemon.Name);
 		GUILayout.Box(pokemon.stats.HP + "/" + pokemon.stats.maxHP,											//-->
-		GUILayout.Width((float)pokemon.stats.HP / (float)pokemon.stats.maxHP * 200f));
-		GUILayout.Box(pokemon.stats.exp + "/" + pokemon.stats.expToNextLevel,								//-->
-		GUILayout.Width((float)pokemon.stats.exp / (float)pokemon.stats.expToNextLevel * 200f));
+		GUILayout.Width((float)pokemon.stats.HP / (float)pokemon.stats.maxHP * (Screen.width/6)));
+		GUILayout.Box("",GUILayout.Width((float)pokemon.stats.exp / (float)pokemon.stats.expToNextLevel * (Screen.width/6)),GUILayout.Height(5));
 		
 		GUILayout.EndArea();
 		
@@ -65,7 +61,7 @@ public class Controls : MonoBehaviour {
 			
 			GUILayout.Label("Lv." + opponent.stats.level + " " + opponent.Name);
 			GUILayout.Box(opponent.stats.HP + "/" + opponent.stats.maxHP,									//-->
-			GUILayout.Width((float)opponent.stats.HP / (float)opponent.stats.maxHP * 200f));
+			GUILayout.Width((float)opponent.stats.HP / (float)opponent.stats.maxHP * (Screen.width/6)));
 			
 			GUILayout.EndArea();
 		}
@@ -102,24 +98,8 @@ public class Controls : MonoBehaviour {
 		return false;
 	}
 	
-	void walk()
-	{/*
-		if(Input.GetKey("w"))
-		{
-			movement.speed += Vector3.forward * Time.deltaTime * pokemon.walkSpeed;
-		}
-		if(Input.GetKey("a"))
-		{
-			movement.speed += Vector3.left * Time.deltaTime * pokemon.walkSpeed;
-		}
-		if(Input.GetKey("s"))
-		{
-			movement.speed += Vector3.back * Time.deltaTime * pokemon.walkSpeed;
-		}
-		if(Input.GetKey("d"))
-		{
-			movement.speed += Vector3.right * Time.deltaTime * pokemon.walkSpeed;
-		}*/
+	void getWalkInput()
+	{
 		Vector3 movementDirection = Vector3.zero;
 		if(Input.GetKey("w"))
 		{
@@ -140,29 +120,62 @@ public class Controls : MonoBehaviour {
 		movement.triggerMovement(movementDirection,pokemon.walkSpeed,Time.deltaTime);
 	}
 	
+	void getAttackInput()
+	{
+		if(Input.GetKeyDown("q"))
+		{
+			
+		}
+		if(Input.GetKeyDown("up") && pokemon.stats.move[1].Name != "")
+		{
+			pokemon.stats.move[1].cast();
+		}
+		if(Input.GetKeyDown("e"))
+		{
+			pokemon.stats.move[0].cast();
+		}
+		if(Input.GetKeyDown("left") && pokemon.stats.move[2].Name != "")
+		{
+			pokemon.stats.move[2].cast();
+		}
+		if(Input.GetKeyDown("right") && pokemon.stats.move[3].Name != "")
+		{
+			pokemon.stats.move[3].cast();
+		}
+		if(Input.GetKeyDown("down") && pokemon.stats.move[4].Name != "")
+		{
+			pokemon.stats.move[4].cast();
+		}
+	}
 	
 	void Update ()
 	{
 		if(determineDoubleTap())
 		{
-			Vector3 dashDirection = Vector3.zero;
+			Vector3 dodgeDirection = Vector3.zero;
 			switch(lastKey)
 			{
 				case "w":
-					dashDirection = Vector3.forward;
+					dodgeDirection = Vector3.forward;
 					break;
 				case "a":
-					dashDirection = Vector3.left;
+					dodgeDirection = Vector3.left;
 					break;
 				case "s":
-					dashDirection = Vector3.back;
+					dodgeDirection = Vector3.back;
 					break;
 				case "d":
-					dashDirection = Vector3.right;
+					dodgeDirection = Vector3.right;
 					break;
 			}
-			movement.triggerDash(dashDirection,pokemon.dashSpeed,pokemon.dashDuration,false);
+			movement.triggerDodge(dodgeDirection,pokemon.dashSpeed,pokemon.dashDuration);
 		}
-		walk();
+		getWalkInput();
+		if(camRotation.lockOnEnemy)
+			getAttackInput();
+		if(opponent == null && transform.GetComponent<Battle>().opponent != null)
+		{
+			opponent = transform.GetComponent<Battle>().opponent;
+		}
 	}
 }

@@ -73,7 +73,11 @@ public class StarterMenu : MonoBehaviour {
 		a.AddComponent<Pokemon>();
 		Pokemon pokemon = a.GetComponent<Pokemon>();
 		pokemon = pokedex.pokedex(pokemon,index,false);
-		string Name = pokemon.Name;
+		string Name;
+		if(pokemon != null)
+			Name = pokemon.Name;
+		else
+			Name = "";
 		Destroy(a.gameObject);
 		return Name;
 	}

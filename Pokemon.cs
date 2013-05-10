@@ -4,6 +4,7 @@ using System.Collections;
 public class Pokemon : MonoBehaviour {
 	
 	public Stats stats;
+	public Movement movement;
 	
 	public int index;
 	public string Name;
