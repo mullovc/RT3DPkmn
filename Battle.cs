@@ -15,7 +15,8 @@ public class Battle : MonoBehaviour {
 	void Start ()
 	{
 		loadBattleSetup();
-		myPokemon = pokedex.pokedex(myPokemon,myPokemonIndex);
+		myPokemon.setStats(myPokemonIndex,true);
+		//myPokemon.stats = pokedex.pokedex(myPokemon.stats,myPokemonIndex);
 		spawnEnemy(enemyPokemonIndex);
 	}
 	
@@ -47,32 +48,36 @@ public class Battle : MonoBehaviour {
 	
 	public void hit(Pokemon attacker,Pokemon defender,Move move)
 	{
-		int damage = move.damage + attacker.stats.level - defender.stats.level;		//provisorisch
+		int damage = move.damage + attacker.level - defender.level;					//provisorisch
 		
-		defender.stats.HP -= damage;
+		defender.HP -= damage;
 		
-		print(attacker.Name + " dealt " + damage + " damage to " + defender.Name + ", using " + move.Name);
+		print(attacker.stats.Name + " dealt " + damage + " damage to " + defender.stats.Name + ", using " + move.Name);
 		
-		if(defender.stats.HP <= 0)
+		if(defender.HP <= 0)
 			faint(attacker,defender);
 	}
 	
 	void faint(Pokemon winner,Pokemon loser)
 	{
 		Camera.main.GetComponent<CameraRotation>().lockOnEnemy = false;
-		loser.stats.status = Pokedex.StatusEffect.Fainted;
+		loser.status = Pokedex.StatusEffect.Fainted;
 		
-		winner.stats.exp += loser.stats.level * 10;									//provisorisch
+		winner.exp += loser.level * 10;												//provisorisch
 		
-		print (loser.Name + " fainted");
-		print (winner.Name + " gained " + loser.stats.level * 10 + " Exp");
+		print (loser.stats.Name + " fainted");
+		print (winner.stats.Name + " gained " + loser.level * 10 + " Exp");
 	}
 	
 	void spawnEnemy(int index)
 	{
 		GameObject enemy = Instantiate(opponent_prefab,new Vector3(0,0,50),Quaternion.Euler(new Vector3(0,180,0))) as GameObject;
-		if(pokedex.pokedex(enemy.GetComponentInChildren<Pokemon>(),index,false) != null)
-			opponent = pokedex.pokedex(enemy.GetComponentInChildren<Pokemon>(),index,false);
+		if(pokedex.pokedex(enemy.GetComponentInChildren<Stats>(),index,false) != null)
+		{
+			opponent = enemy.GetComponentInChildren<Pokemon>();
+			opponent.setStats(index);
+			//opponent.stats = pokedex.pokedex(enemy.GetComponentInChildren<Stats>(),index,false);
+		}
 		else
 			Destroy(enemy);
 	}

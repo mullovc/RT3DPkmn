@@ -55,7 +55,7 @@ public class Pokedex : MonoBehaviour {
 		MeleeSeeking
 	}
 	
-	public Pokemon pokedex(Pokemon pokemon,int index,bool yourself = true)
+	public Stats pokedex(Stats pokemon,int index,bool yourself = true)
 	{
 		switch(index)
 		{
@@ -321,6 +321,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 12;
+				pokemon.learnableMoves[1] = 3;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-12 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -373,6 +374,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 14;
+				pokemon.learnableMoves[1] = 3;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-11);
@@ -448,6 +450,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 14;
+				pokemon.learnableMoves[1] = 3;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-12 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -460,7 +463,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 15;
-			
+				pokemon.learnableMoves[1] = 3;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -492,7 +495,7 @@ public class Pokedex : MonoBehaviour {
 				move.range = 20;
 				move.speed = 1000;
 				move.cooldownTime = 2f;
-				move.castingTime = 0.25f;
+				move.castingTime = 0.33f;
 				break;
 			case 2:
 				move.Name = "Tackle";
@@ -502,7 +505,7 @@ public class Pokedex : MonoBehaviour {
 				move.range = 30;
 				move.speed = 1000;
 				move.cooldownTime = 3;
-				move.castingTime = 0.4f;
+				move.castingTime = 0.5f;
 				break;
 			case 3:
 				move.Name = "Spukball";
@@ -511,7 +514,7 @@ public class Pokedex : MonoBehaviour {
 				move.projectileType = MoveProjectileType.RangedSeeking;
 				move.range = 100;
 				move.speed = 25;
-				move.castingTime = 1f;
+				move.castingTime = 2f;
 				break;
 		}
 		

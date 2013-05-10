@@ -4,7 +4,6 @@ using System.Collections;
 public class Controls : MonoBehaviour {
 	
 	public CameraRotation camRotation;
-	public Movement movement;
 	public Pokemon pokemon;
 	public Pokemon opponent;
 	
@@ -29,16 +28,16 @@ public class Controls : MonoBehaviour {
 			
 			GUILayout.Space(Screen.width * (1f/32f));
 			GUILayout.Box("Q",GUILayout.Width(Screen.width * (5f/96f)));
-			GUILayout.Box(pokemon.stats.move[1].Name);
+			GUILayout.Box(pokemon.move[1].Name);
 			GUILayout.Box("E",GUILayout.Width(Screen.width * (5f/96f)));
 			GUILayout.Space(Screen.width * (1f/32f));
 			
 			GUILayout.EndHorizontal();
 			GUILayout.BeginHorizontal();
 			
-			GUILayout.Box(pokemon.stats.move[2].Name);
-			GUILayout.Box(pokemon.stats.move[3].Name);
-			GUILayout.Box(pokemon.stats.move[4].Name);
+			GUILayout.Box(pokemon.move[2].Name);
+			GUILayout.Box(pokemon.move[3].Name);
+			GUILayout.Box(pokemon.move[4].Name);
 			
 			GUILayout.EndHorizontal();
 			GUILayout.EndArea();
@@ -48,10 +47,10 @@ public class Controls : MonoBehaviour {
 		
 		GUILayout.BeginArea(new Rect(0,0,Screen.width / 6,Screen.height / 6));
 		
-		GUILayout.Label("Lv." + pokemon.stats.level + " " + pokemon.Name);
-		GUILayout.Box(pokemon.stats.HP + "/" + pokemon.stats.maxHP,											//-->
-		GUILayout.Width((float)pokemon.stats.HP / (float)pokemon.stats.maxHP * (Screen.width/6)));
-		GUILayout.Box("",GUILayout.Width((float)pokemon.stats.exp / (float)pokemon.stats.expToNextLevel * (Screen.width/6)),GUILayout.Height(5));
+		GUILayout.Label("Lv." + pokemon.level + " " + pokemon.stats.Name);
+		GUILayout.Box(pokemon.HP + "/" + pokemon.maxHP,											//-->
+		GUILayout.Width((float)pokemon.HP / (float)pokemon.maxHP * (Screen.width/6)));
+		GUILayout.Box("",GUILayout.Width((float)pokemon.exp / (float)pokemon.expToNextLevel * (Screen.width/6)),GUILayout.Height(5));
 		
 		GUILayout.EndArea();
 		
@@ -59,9 +58,9 @@ public class Controls : MonoBehaviour {
 		{
 			GUILayout.BeginArea(new Rect(Screen.width * (5f/6f),0,Screen.width / 6,Screen.height / 6));
 			
-			GUILayout.Label("Lv." + opponent.stats.level + " " + opponent.Name);
-			GUILayout.Box(opponent.stats.HP + "/" + opponent.stats.maxHP,									//-->
-			GUILayout.Width((float)opponent.stats.HP / (float)opponent.stats.maxHP * (Screen.width/6)));
+			GUILayout.Label("Lv." + opponent.level + " " + opponent.stats.Name);
+			GUILayout.Box(opponent.HP + "/" + opponent.maxHP,									//-->
+			GUILayout.Width((float)opponent.HP / (float)opponent.maxHP * (Screen.width/6)));
 			
 			GUILayout.EndArea();
 		}
@@ -117,7 +116,7 @@ public class Controls : MonoBehaviour {
 		{
 			movementDirection += Vector3.right;
 		}
-		movement.triggerMovement(movementDirection,pokemon.walkSpeed,Time.deltaTime);
+		pokemon.movement.triggerMovement(movementDirection,pokemon.stats.walkSpeed,Time.deltaTime);
 	}
 	
 	void getAttackInput()
@@ -126,25 +125,25 @@ public class Controls : MonoBehaviour {
 		{
 			
 		}
-		if(Input.GetKeyDown("up") && pokemon.stats.move[1].Name != "")
+		if(Input.GetKeyDown("up") && pokemon.move[1].Name != "")
 		{
-			pokemon.stats.move[1].cast();
+			pokemon.move[1].cast();
 		}
 		if(Input.GetKeyDown("e"))
 		{
-			pokemon.stats.move[0].cast();
+			pokemon.move[0].cast();
 		}
-		if(Input.GetKeyDown("left") && pokemon.stats.move[2].Name != "")
+		if(Input.GetKeyDown("left") && pokemon.move[2].Name != "")
 		{
-			pokemon.stats.move[2].cast();
+			pokemon.move[2].cast();
 		}
-		if(Input.GetKeyDown("right") && pokemon.stats.move[3].Name != "")
+		if(Input.GetKeyDown("right") && pokemon.move[3].Name != "")
 		{
-			pokemon.stats.move[3].cast();
+			pokemon.move[3].cast();
 		}
-		if(Input.GetKeyDown("down") && pokemon.stats.move[4].Name != "")
+		if(Input.GetKeyDown("down") && pokemon.move[4].Name != "")
 		{
-			pokemon.stats.move[4].cast();
+			pokemon.move[4].cast();
 		}
 	}
 	
@@ -168,7 +167,7 @@ public class Controls : MonoBehaviour {
 					dodgeDirection = Vector3.right;
 					break;
 			}
-			movement.triggerDodge(dodgeDirection,pokemon.dashSpeed,pokemon.dashDuration);
+			pokemon.movement.triggerDodge(dodgeDirection,pokemon.stats.dashSpeed,pokemon.stats.dashDuration);
 		}
 		getWalkInput();
 		if(camRotation.lockOnEnemy)

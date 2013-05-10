@@ -15,20 +15,20 @@ public class AI : MonoBehaviour {
 	
 	void faint()
 	{
-		if(pokemon.model.transform.position.y >= 0)
+		if(transform.position.y >= 0)
 		{
-			pokemon.movement.triggerMovement(Vector3.down,pokemon.height * 1.5f,1);
+			pokemon.movement.triggerMovement(Vector3.down,pokemon.stats.height * 1.5f,1);
 		}
 		
-		else if(pokemon.stats.status == Pokedex.StatusEffect.Fainted && pokemon.transform.parent.position.y < 0 && !pokemon.movement.moving())
+		else if(pokemon.status == Pokedex.StatusEffect.Fainted && transform.position.y < 0 && !pokemon.movement.moving())
 		{
-			Destroy(pokemon.transform.parent.gameObject);
+			Destroy(transform.gameObject);
 		}
 	}
 	
 	void pathfinding()
 	{
-		pokemon.movement.triggerChase(opponent.transform,5,1);
+		pokemon.movement.triggerChase(opponent.transform,/*pokemon.stats.walkSpeed*/5,1);
 	}
 	
 	void attack()
@@ -38,11 +38,11 @@ public class AI : MonoBehaviour {
 		do
 		{
 			randomMove = rand.Next(5);
-		} while(pokemon.stats.move[randomMove] == null);
+		} while(pokemon.move[randomMove] == null);
 		
-		if(Vector3.Distance(transform.position,opponent.transform.position) < pokemon.stats.move[randomMove].range)
+		if(Vector3.Distance(transform.position,opponent.transform.position) < pokemon.move[randomMove].range)
 		{
-			pokemon.stats.move[randomMove].cast();
+			pokemon.move[randomMove].cast();
 		}
 	}
 	
@@ -53,7 +53,7 @@ public class AI : MonoBehaviour {
 		{
 			Vector3 direction = projectile.transform.position - transform.position;
 			direction = Vector3.Cross(direction,Vector3.up);
-			pokemon.movement.triggerDodge(direction,pokemon.dashSpeed,pokemon.dashDuration,true);
+			pokemon.movement.triggerDodge(direction,pokemon.stats.dashSpeed,pokemon.stats.dashDuration,true);
 		}
 	}
 	
@@ -67,11 +67,11 @@ public class AI : MonoBehaviour {
 	
 	void Update ()
 	{
-		if(pokemon.stats.status == Pokedex.StatusEffect.Fainted)
+		if(pokemon.status == Pokedex.StatusEffect.Fainted)
 		{
 			faint();
 		}
-		if(pokemon.stats.status != Pokedex.StatusEffect.Fainted && AIActive)
+		if(pokemon.status != Pokedex.StatusEffect.Fainted && AIActive)
 		{
 			pathfinding();
 			attack();

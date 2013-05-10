@@ -20,6 +20,7 @@ public class Move : MonoBehaviour {
 	public float castingTime;
 	float timeScinceUse;
 	bool casting;
+	Light castIndicator;																				//provisorisch
 	
 	public bool projectileIsActive;
 	public float projectileTimeLeft;
@@ -34,13 +35,15 @@ public class Move : MonoBehaviour {
 	void Start ()
 	{
 		battle = Camera.main.GetComponent<Battle>();
-		//projectile_prefab = GameObject.Find("Projectile").GetComponent<Projectile>();
+		castIndicator = GameObject.Find("CastIndicator " + pokemon.name).GetComponent<Light>();			//provisorisch
+		castIndicator.range = pokemon.stats.height / 2;													//provisorisch
 	}
 	
 	public void cast()
 	{
 		if(timeScinceUse > cooldownTime && !projectileIsActive && !casting)
 		{
+			castIndicator.intensity = 8;																//provisorisch
 			timeScinceUse = 0;
 			casting = true;
 		}
@@ -104,6 +107,7 @@ public class Move : MonoBehaviour {
 		
 		if(casting && timeScinceUse > castingTime)
 		{
+			castIndicator.intensity = 0;																//provisorisch
 			casting = false;
 			battle.attack(pokemon,this);
 		}
