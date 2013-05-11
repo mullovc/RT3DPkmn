@@ -73,14 +73,142 @@ public class Battle : MonoBehaviour {
 		}
 	}
 	
+	float checkWeakness(Pokedex.Type Type1,Pokedex.Type Type2)
+	{
+		if(Type1 == Pokedex.Type.Fire && Type2 == Pokedex.Type.Grass
+		|| Type1 == Pokedex.Type.Fire && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Fire && Type2 == Pokedex.Type.Bug
+		|| Type1 == Pokedex.Type.Fire && Type2 == Pokedex.Type.Ice
+		|| Type1 == Pokedex.Type.Water && Type2 == Pokedex.Type.Fire
+		|| Type1 == Pokedex.Type.Water && Type2 == Pokedex.Type.Rock
+		|| Type1 == Pokedex.Type.Water && Type2 == Pokedex.Type.Ground
+		|| Type1 == Pokedex.Type.Grass && Type2 == Pokedex.Type.Rock
+		|| Type1 == Pokedex.Type.Grass && Type2 == Pokedex.Type.Ground
+		|| Type1 == Pokedex.Type.Grass && Type2 == Pokedex.Type.Water
+		|| Type1 == Pokedex.Type.Electric && Type2 == Pokedex.Type.Water
+		|| Type1 == Pokedex.Type.Electric && Type2 == Pokedex.Type.Flying
+		|| Type1 == Pokedex.Type.Ice && Type2 == Pokedex.Type.Ground
+		|| Type1 == Pokedex.Type.Ice && Type2 == Pokedex.Type.Grass
+		|| Type1 == Pokedex.Type.Ice && Type2 == Pokedex.Type.Flying
+		|| Type1 == Pokedex.Type.Ice && Type2 == Pokedex.Type.Dragon
+		|| Type1 == Pokedex.Type.Fighting && Type2 == Pokedex.Type.Normal
+		|| Type1 == Pokedex.Type.Fighting && Type2 == Pokedex.Type.Ice
+		|| Type1 == Pokedex.Type.Fighting && Type2 == Pokedex.Type.Rock
+		|| Type1 == Pokedex.Type.Fighting && Type2 == Pokedex.Type.Dark
+		|| Type1 == Pokedex.Type.Fighting && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Poison && Type2 == Pokedex.Type.Grass
+		|| Type1 == Pokedex.Type.Ground && Type2 == Pokedex.Type.Fire
+		|| Type1 == Pokedex.Type.Ground && Type2 == Pokedex.Type.Electric
+		|| Type1 == Pokedex.Type.Ground && Type2 == Pokedex.Type.Poison
+		|| Type1 == Pokedex.Type.Ground && Type2 == Pokedex.Type.Rock
+		|| Type1 == Pokedex.Type.Ground && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Flying && Type2 == Pokedex.Type.Grass
+		|| Type1 == Pokedex.Type.Flying && Type2 == Pokedex.Type.Fighting
+		|| Type1 == Pokedex.Type.Flying && Type2 == Pokedex.Type.Bug
+		|| Type1 == Pokedex.Type.Psychic && Type2 == Pokedex.Type.Fighting
+		|| Type1 == Pokedex.Type.Psychic && Type2 == Pokedex.Type.Poison
+		|| Type1 == Pokedex.Type.Bug && Type2 == Pokedex.Type.Grass
+		|| Type1 == Pokedex.Type.Bug && Type2 == Pokedex.Type.Psychic
+		|| Type1 == Pokedex.Type.Bug && Type2 == Pokedex.Type.Dark
+		|| Type1 == Pokedex.Type.Rock && Type2 == Pokedex.Type.Fire
+		|| Type1 == Pokedex.Type.Rock && Type2 == Pokedex.Type.Ice
+		|| Type1 == Pokedex.Type.Rock && Type2 == Pokedex.Type.Fighting
+		|| Type1 == Pokedex.Type.Rock && Type2 == Pokedex.Type.Bug
+		|| Type1 == Pokedex.Type.Ghost && Type2 == Pokedex.Type.Psychic
+		|| Type1 == Pokedex.Type.Ghost && Type2 == Pokedex.Type.Ghost
+		|| Type1 == Pokedex.Type.Dragon && Type2 == Pokedex.Type.Dragon
+		|| Type1 == Pokedex.Type.Dark && Type2 == Pokedex.Type.Psychic
+		|| Type1 == Pokedex.Type.Dark && Type2 == Pokedex.Type.Ghost
+		|| Type1 == Pokedex.Type.Steel && Type2 == Pokedex.Type.Ice
+		|| Type1 == Pokedex.Type.Steel && Type2 == Pokedex.Type.Rock)
+			return 2;
+		else if(Type1 == Pokedex.Type.Normal && Type2 == Pokedex.Type.Rock
+		|| Type1 == Pokedex.Type.Normal && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Fire && Type2 == Pokedex.Type.Fire
+		|| Type1 == Pokedex.Type.Fire && Type2 == Pokedex.Type.Water
+		|| Type1 == Pokedex.Type.Fire && Type2 == Pokedex.Type.Rock
+		|| Type1 == Pokedex.Type.Fire && Type2 == Pokedex.Type.Dragon
+		|| Type1 == Pokedex.Type.Water && Type2 == Pokedex.Type.Water
+		|| Type1 == Pokedex.Type.Water && Type2 == Pokedex.Type.Grass
+		|| Type1 == Pokedex.Type.Water && Type2 == Pokedex.Type.Dragon
+		|| Type1 == Pokedex.Type.Grass && Type2 == Pokedex.Type.Fire
+		|| Type1 == Pokedex.Type.Grass && Type2 == Pokedex.Type.Grass
+		|| Type1 == Pokedex.Type.Grass && Type2 == Pokedex.Type.Bug
+		|| Type1 == Pokedex.Type.Grass && Type2 == Pokedex.Type.Poison
+		|| Type1 == Pokedex.Type.Grass && Type2 == Pokedex.Type.Flying
+		|| Type1 == Pokedex.Type.Grass && Type2 == Pokedex.Type.Dragon
+		|| Type1 == Pokedex.Type.Grass && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Electric && Type2 == Pokedex.Type.Grass
+		|| Type1 == Pokedex.Type.Electric && Type2 == Pokedex.Type.Electric
+		|| Type1 == Pokedex.Type.Electric && Type2 == Pokedex.Type.Dragon
+		|| Type1 == Pokedex.Type.Ice && Type2 == Pokedex.Type.Fire
+		|| Type1 == Pokedex.Type.Ice && Type2 == Pokedex.Type.Water
+		|| Type1 == Pokedex.Type.Ice && Type2 == Pokedex.Type.Ice
+		|| Type1 == Pokedex.Type.Ice && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Fighting && Type2 == Pokedex.Type.Poison
+		|| Type1 == Pokedex.Type.Fighting && Type2 == Pokedex.Type.Flying
+		|| Type1 == Pokedex.Type.Fighting && Type2 == Pokedex.Type.Psychic
+		|| Type1 == Pokedex.Type.Fighting && Type2 == Pokedex.Type.Bug
+		|| Type1 == Pokedex.Type.Poison && Type2 == Pokedex.Type.Poison
+		|| Type1 == Pokedex.Type.Poison && Type2 == Pokedex.Type.Ground
+		|| Type1 == Pokedex.Type.Poison && Type2 == Pokedex.Type.Rock
+		|| Type1 == Pokedex.Type.Poison && Type2 == Pokedex.Type.Ghost
+		|| Type1 == Pokedex.Type.Ground && Type2 == Pokedex.Type.Grass
+		|| Type1 == Pokedex.Type.Ground && Type2 == Pokedex.Type.Bug
+		|| Type1 == Pokedex.Type.Flying && Type2 == Pokedex.Type.Electric
+		|| Type1 == Pokedex.Type.Flying && Type2 == Pokedex.Type.Rock
+		|| Type1 == Pokedex.Type.Flying && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Psychic && Type2 == Pokedex.Type.Psychic
+		|| Type1 == Pokedex.Type.Psychic && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Bug && Type2 == Pokedex.Type.Fire
+		|| Type1 == Pokedex.Type.Bug && Type2 == Pokedex.Type.Fighting
+		|| Type1 == Pokedex.Type.Bug && Type2 == Pokedex.Type.Poison
+		|| Type1 == Pokedex.Type.Bug && Type2 == Pokedex.Type.Flying
+		|| Type1 == Pokedex.Type.Bug && Type2 == Pokedex.Type.Ghost
+		|| Type1 == Pokedex.Type.Bug && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Rock && Type2 == Pokedex.Type.Fire
+		|| Type1 == Pokedex.Type.Rock && Type2 == Pokedex.Type.Ice
+		|| Type1 == Pokedex.Type.Rock && Type2 == Pokedex.Type.Flying
+		|| Type1 == Pokedex.Type.Rock && Type2 == Pokedex.Type.Bug
+		|| Type1 == Pokedex.Type.Ghost && Type2 == Pokedex.Type.Dark
+		|| Type1 == Pokedex.Type.Ghost && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Dragon && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Dark && Type2 == Pokedex.Type.Fighting
+		|| Type1 == Pokedex.Type.Dark && Type2 == Pokedex.Type.Dark
+		|| Type1 == Pokedex.Type.Dark && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Steel && Type2 == Pokedex.Type.Fire
+		|| Type1 == Pokedex.Type.Steel && Type2 == Pokedex.Type.Water
+		|| Type1 == Pokedex.Type.Steel && Type2 == Pokedex.Type.Electric
+		|| Type1 == Pokedex.Type.Steel && Type2 == Pokedex.Type.Steel)
+			return 0.5f;
+		else if(Type1 == Pokedex.Type.Normal && Type2 == Pokedex.Type.Ghost
+		|| Type1 == Pokedex.Type.Electric && Type2 == Pokedex.Type.Ground
+		|| Type1 == Pokedex.Type.Fighting && Type2 == Pokedex.Type.Ghost
+		|| Type1 == Pokedex.Type.Poison && Type2 == Pokedex.Type.Steel
+		|| Type1 == Pokedex.Type.Ground && Type2 == Pokedex.Type.Flying
+		|| Type1 == Pokedex.Type.Psychic && Type2 == Pokedex.Type.Dark
+		|| Type1 == Pokedex.Type.Ghost && Type2 == Pokedex.Type.Normal)
+			return 0;
+		else
+			return 1;
+	}
+	
+	
 	float determineEffectiveness(Move move,Pokemon victim)
 	{
-		return 1;													//provisorisch
+		float effectiveness = checkWeakness(move.type,victim.stats.type1) * checkWeakness(move.type,victim.stats.type2);
+		//print(effectiveness);
+		return effectiveness;
 	}
 	
 	float determineSTAB(Move move,Pokemon attacker)
 	{
-		return 1;													//provisorisch
+		if(move.type == attacker.stats.type1 || move.type == attacker.stats.type2)
+		{
+			return 1.5f;
+		}
+		else
+			return 1;
 	}
 	
 	public void attack(Pokemon attacker,Move move)
@@ -103,11 +231,20 @@ public class Battle : MonoBehaviour {
 	{
 		float additionalEffects = determineEffectiveness(move,defender) * determineSTAB(move,attacker);
 		
-		float damage = (((2f * attacker.level + 10f)/250f) * (attacker.attack/defender.defense) * move.damage + 2f) * additionalEffects;
+		float damage = 0;
+		if(move.category == Pokedex.MoveCategory.Physical)
+		{
+			damage = (((2f * attacker.level + 10f)/250f) * (attacker.attack/defender.defense) * move.damage + 2f);
+		}
+		else if(move.category == Pokedex.MoveCategory.Special)
+		{
+			damage = (((2f * attacker.level + 10f)/250f) * (attacker.specialAttack/defender.specialDefense) * move.damage + 2f);
+		}
+		damage *= additionalEffects;
 		
 		defender.HP -= (int)damage;
 		
-		print(attacker.stats.Name + " dealt " + (int)damage + " damage to " + defender.stats.Name + ", using " + move.Name);
+		//print(attacker.stats.Name + " dealt " + (int)damage + " damage to " + defender.stats.Name + ", using " + move.Name);
 		
 		if(defender.HP <= 0)
 			faint(attacker,defender);
@@ -121,8 +258,8 @@ public class Battle : MonoBehaviour {
 		float gainedEXP = (loser.stats.EXPBaseValue * loser.level)/7;
 		winner.exp += (int)gainedEXP;
 		
-		print (loser.stats.Name + " fainted");
-		print (winner.stats.Name + " gained " + (int)gainedEXP + " Exp");
+		//print (loser.stats.Name + " fainted");
+		//print (winner.stats.Name + " gained " + (int)gainedEXP + " Exp");
 	}
 	
 	void spawnEnemy(int index)
@@ -136,7 +273,6 @@ public class Battle : MonoBehaviour {
 		else
 			Destroy(enemy);
 	}
-	
 	
 	
 	void Update ()

@@ -23,6 +23,7 @@ public class Stats : MonoBehaviour {
 	
 	public Pokedex.Type type1;
 	public Pokedex.Type type2;
+	public Pokedex.LevelingSpeed levelingSpeed;
 	
 	public GameObject model;
 	

@@ -48,10 +48,10 @@ public class Controls : MonoBehaviour {
 		GUILayout.BeginArea(new Rect(0,0,Screen.width / 6,Screen.height / 6));
 		
 		GUILayout.Label("Lv." + pokemon.level + " " + pokemon.stats.Name);
-		GUILayout.Box(pokemon.HP + "/" + pokemon.maxHP,											//-->
-		GUILayout.Width((float)pokemon.HP / (float)pokemon.maxHP * (Screen.width/6)));
-		GUILayout.Box("",GUILayout.Width((float)pokemon.exp / (float)pokemon.expToNextLevel * (Screen.width/6)),GUILayout.Height(5));
-		
+		GUILayout.Box(pokemon.HP + "/" + pokemon.maxHP,GUILayout.Width(pokemon.HP / pokemon.maxHP * (Screen.width/6)));
+		GUILayout.Box("",GUILayout.Width((pokemon.exp - pokemon.getExpToNextLevel(pokemon.level))
+		/ (pokemon.expToNextLevel - pokemon.getExpToNextLevel(pokemon.level)) * (Screen.width/6)),GUILayout.Height(5));
+		print (pokemon.getExpToNextLevel(pokemon.level));
 		GUILayout.EndArea();
 		
 		if(camRotation.lockOnEnemy)
@@ -59,8 +59,7 @@ public class Controls : MonoBehaviour {
 			GUILayout.BeginArea(new Rect(Screen.width * (5f/6f),0,Screen.width / 6,Screen.height / 6));
 			
 			GUILayout.Label("Lv." + opponent.level + " " + opponent.stats.Name);
-			GUILayout.Box(opponent.HP + "/" + opponent.maxHP,									//-->
-			GUILayout.Width((float)opponent.HP / (float)opponent.maxHP * (Screen.width/6)));
+			GUILayout.Box(opponent.HP + "/" + opponent.maxHP,GUILayout.Width(opponent.HP / opponent.maxHP * (Screen.width/6)));
 			
 			GUILayout.EndArea();
 		}

@@ -30,6 +30,7 @@ public class Projectile : MonoBehaviour {
 	
 	void Update ()
 	{
-		
+		if(attacker == null)
+			Destroy(gameObject);
 	}
 }

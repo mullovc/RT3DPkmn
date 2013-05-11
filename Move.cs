@@ -25,8 +25,8 @@ public class Move : MonoBehaviour {
 	public bool projectileIsActive;
 	public float projectileTimeLeft;
 	
-	public Pokedex.Type type1;
-	public Pokedex.Type type2;
+	public Pokedex.Type type;
+	public Pokedex.MoveCategory category;
 	public Pokedex.StatusEffect statusEffect;
 	public Pokedex.MoveProjectileType projectileType;
 	
@@ -76,7 +76,27 @@ public class Move : MonoBehaviour {
 			projectile.movement.triggerChase(target.transform,speed,range/speed);
 			projectileTimeLeft = range/speed;
 		}
+		else if(projectileType == Pokedex.MoveProjectileType.AttackerOrbit)
+		{
+			projectile.movement.triggerChase(target.transform,speed,range/speed);
+			projectile.transform.parent = transform;
+			projectileTimeLeft = 5;
+			pokemon.movement.disable(projectileTimeLeft);
+		}
 		projectileIsActive = true;
+	}
+	
+	void destroyProjectile(bool hit)
+	{
+		if(pokemon.transform.parent.parent == projectile.transform)
+		{
+			pokemon.transform.parent.parent = null;
+		}
+		Destroy(projectile.gameObject);
+		projectileIsActive = false;
+		pokemon.movement.enable();
+		if(hit)
+			battle.hit(pokemon,projectile.target,this);
 	}
 	
 	void Update ()
@@ -84,24 +104,9 @@ public class Move : MonoBehaviour {
 		if(projectileIsActive)
 		{
 			if(projectile.checkCollision())
-			{
-				if(pokemon.transform.parent.parent == projectile.transform)
-				{
-					pokemon.transform.parent.parent = null;
-				}
-				Destroy(projectile.gameObject);
-				battle.hit(pokemon,projectile.target,this);
-				projectileIsActive = false;
-			}
+				destroyProjectile(true);
 			else if(projectileTimeLeft <= 0)
-			{
-				if(pokemon.transform.parent.parent == projectile.transform)
-				{
-					pokemon.transform.parent.parent = null;
-				}
-				Destroy(projectile.gameObject);
-				projectileIsActive = false;
-			}
+				destroyProjectile(false);
 			projectileTimeLeft -= Time.deltaTime;
 		}
 		timeScinceUse += Time.deltaTime;

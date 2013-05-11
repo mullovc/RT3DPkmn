@@ -30,6 +30,7 @@ public class Pokedex : MonoBehaviour {
 		Electric,
 		Psychic,
 		Steel,
+		Ice,
 		Dragon,
 		Poison
 	}
@@ -46,6 +47,13 @@ public class Pokedex : MonoBehaviour {
 		Frozen
 	}
 	
+	public enum MoveCategory
+	{
+		Physical,
+		Special,
+		Status
+	}
+	
 	public enum MoveProjectileType
 	{
 		Melee,
@@ -56,6 +64,16 @@ public class Pokedex : MonoBehaviour {
 		AttackerOrbit
 	}
 	
+	public enum LevelingSpeed
+	{
+		Erratic,
+		Fast,
+		MediumFast,
+		MediumSlow,
+		Slow,
+		Fluctuating
+	}
+	
 	public Stats pokedex(Stats pokemon,int index,bool yourself = true)
 	{
 		switch(index)
@@ -64,10 +82,12 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Bisasam";
 				pokemon.type1 = Type.Grass;
 				pokemon.type2 = Type.Poison;
+				pokemon.EXPBaseValue = 64;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 15;
+				pokemon.levelingSpeed = LevelingSpeed.MediumSlow;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -77,10 +97,12 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Bisaflor";
 				pokemon.type1 = Type.Grass;
 				pokemon.type2 = Type.Poison;
+				pokemon.EXPBaseValue = 208;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 15;
+				pokemon.levelingSpeed = LevelingSpeed.MediumSlow;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -89,10 +111,12 @@ public class Pokedex : MonoBehaviour {
 			case 4:
 				pokemon.Name = "Glumanda";
 				pokemon.type1 = Type.Fire;
+				pokemon.EXPBaseValue = 65;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 15;
+				pokemon.levelingSpeed = LevelingSpeed.MediumSlow;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -108,11 +132,13 @@ public class Pokedex : MonoBehaviour {
 				pokemon.specialAttackBaseValue = 109;
 				pokemon.specialDefenseBaseValue = 85;
 				pokemon.initiativeBaseValue = 100;
-				pokemon.EXPBaseValue = 206;
+				pokemon.EXPBaseValue = 209;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 15;
+				pokemon.levelingSpeed = LevelingSpeed.MediumSlow;
+				pokemon.learnableMoves[1] = 5;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-11 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -121,10 +147,12 @@ public class Pokedex : MonoBehaviour {
 			case 7:
 				pokemon.Name = "Schiggy";
 				pokemon.type1 = Type.Water;
+				pokemon.EXPBaseValue = 66;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 15;
+				pokemon.levelingSpeed = LevelingSpeed.MediumSlow;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -133,10 +161,12 @@ public class Pokedex : MonoBehaviour {
 			case 9:
 				pokemon.Name = "Turtok";
 				pokemon.type1 = Type.Water;
+				pokemon.EXPBaseValue = 210;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 15;
+				pokemon.levelingSpeed = LevelingSpeed.MediumSlow;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -145,6 +175,7 @@ public class Pokedex : MonoBehaviour {
 			case 10:
 				pokemon.Name = "Raupy";
 				pokemon.type1 = Type.Bug;
+				pokemon.EXPBaseValue = 53;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -158,6 +189,7 @@ public class Pokedex : MonoBehaviour {
 			case 11:
 				pokemon.Name = "Safkon";
 				pokemon.type1 = Type.Bug;
+				pokemon.EXPBaseValue = 72;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -171,6 +203,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Smettbo";
 				pokemon.type1 = Type.Bug;
 				pokemon.type2 = Type.Flying;
+				pokemon.EXPBaseValue = 160;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -184,6 +217,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Hornliu";
 				pokemon.type1 = Type.Bug;
 				pokemon.type2 = Type.Poison;
+				pokemon.EXPBaseValue = 52;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -198,6 +232,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Kokuna";
 				pokemon.type1 = Type.Bug;
 				pokemon.type2 = Type.Poison;
+				pokemon.EXPBaseValue = 71;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -211,10 +246,12 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Tauboga";
 				pokemon.type1 = Type.Normal;
 				pokemon.type2 = Type.Flying;
+				pokemon.EXPBaseValue = 113;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 15;
+				pokemon.learnableMoves[1] = 2;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -224,10 +261,12 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Habitak";
 				pokemon.type1 = Type.Normal;
 				pokemon.type2 = Type.Flying;
+				pokemon.EXPBaseValue = 58;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 15;
+				pokemon.learnableMoves[1] = 2;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -256,6 +295,7 @@ public class Pokedex : MonoBehaviour {
 			case 26:
 				pokemon.Name = "Raichu";
 				pokemon.type1 = Type.Electric;
+				pokemon.EXPBaseValue = 122;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -269,6 +309,7 @@ public class Pokedex : MonoBehaviour {
 			case 37:
 				pokemon.Name = "Vulpix";
 				pokemon.type1 = Type.Fire;
+				pokemon.EXPBaseValue = 63;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -281,6 +322,7 @@ public class Pokedex : MonoBehaviour {
 			case 38:
 				pokemon.Name = "Vulnona";
 				pokemon.type1 = Type.Fire;
+				pokemon.EXPBaseValue = 178;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -294,6 +336,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Zubat";
 				pokemon.type1 = Type.Poison;
 				pokemon.type2 = Type.Flying;
+				pokemon.EXPBaseValue = 54;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -307,6 +350,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Nebulak";
 				pokemon.type1 = Type.Ghost;
 				pokemon.type2 = Type.Poison;
+				pokemon.EXPBaseValue = 95;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -320,6 +364,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Alpollo";
 				pokemon.type1 = Type.Ghost;
 				pokemon.type2 = Type.Poison;
+				pokemon.EXPBaseValue = 126;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -355,6 +400,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Dragoran";
 				pokemon.type1 = Type.Dragon;
 				pokemon.type2 = Type.Flying;
+				pokemon.EXPBaseValue = 218;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -367,6 +413,7 @@ public class Pokedex : MonoBehaviour {
 			case 151:
 				pokemon.Name = "Mew";
 				pokemon.type1 = Type.Psychic;
+				pokemon.EXPBaseValue = 64;
 				pokemon.dashSpeed = 200;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 20;
@@ -381,6 +428,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Scherox";
 				pokemon.type1 = Type.Bug;
 				pokemon.type2 = Type.Steel;
+				pokemon.EXPBaseValue = 200;
 				pokemon.dashSpeed = 330;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 30;
@@ -394,6 +442,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Despotar";
 				pokemon.type1 = Type.Rock;
 				pokemon.type2 = Type.Dark;
+				pokemon.EXPBaseValue = 218;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -408,10 +457,12 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Lohgock";
 				pokemon.type1 = Type.Fire;
 				pokemon.type2 = Type.Fighting;
+				pokemon.EXPBaseValue = 209;
 				pokemon.dashSpeed = 320;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 30;
 				pokemon.height = 13;
+				pokemon.levelingSpeed = LevelingSpeed.MediumSlow;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-9);
@@ -420,6 +471,7 @@ public class Pokedex : MonoBehaviour {
 			case 321:
 				pokemon.Name = "Wailord";
 				pokemon.type1 = Type.Water;
+				pokemon.EXPBaseValue = 206;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 50;
@@ -433,6 +485,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Metagross";
 				pokemon.type1 = Type.Steel;
 				pokemon.type2 = Type.Psychic;
+				pokemon.EXPBaseValue = 210;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -445,6 +498,7 @@ public class Pokedex : MonoBehaviour {
 			case 383:
 				pokemon.Name = "Groudon";
 				pokemon.type1 = Type.Ground;
+				pokemon.EXPBaseValue = 218;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 50;
@@ -458,6 +512,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Rayquaza";
 				pokemon.type1 = Type.Dragon;
 				pokemon.type2 = Type.Flying;
+				pokemon.EXPBaseValue = 220;
 				pokemon.dashSpeed = 400;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 50;
@@ -470,6 +525,7 @@ public class Pokedex : MonoBehaviour {
 			case 386:
 				pokemon.Name = "Deoxys";
 				pokemon.type1 = Type.Psychic;
+				pokemon.EXPBaseValue = 215;
 				pokemon.dashSpeed = 400;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -483,6 +539,7 @@ public class Pokedex : MonoBehaviour {
 			case 491:
 				pokemon.Name = "Darkrai";
 				pokemon.type1 = Type.Dark;
+				pokemon.EXPBaseValue = 210;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -515,6 +572,8 @@ public class Pokedex : MonoBehaviour {
 			case 1:
 				move.Name = "Standart Attack";
 				move.damage = 20;
+				move.type = Type.Normal;
+				move.category = MoveCategory.Physical;
 				move.projectileType = MoveProjectileType.Dash;
 				move.range = 20;
 				move.speed = 1000;
@@ -523,8 +582,9 @@ public class Pokedex : MonoBehaviour {
 				break;
 			case 2:
 				move.Name = "Tackle";
-				move.damage = 40;
-				move.type1 = Type.Normal;
+				move.damage = 50;
+				move.type = Type.Normal;
+				move.category = MoveCategory.Physical;
 				move.projectileType = MoveProjectileType.Dash;
 				move.range = 30;
 				move.speed = 1000;
@@ -534,7 +594,8 @@ public class Pokedex : MonoBehaviour {
 			case 3:
 				move.Name = "Spukball";
 				move.damage = 80;
-				move.type1 = Type.Ghost;
+				move.type = Type.Ghost;
+				move.category = MoveCategory.Special;
 				move.projectileType = MoveProjectileType.RangedSeeking;
 				move.range = 100;
 				move.speed = 25;
@@ -543,12 +604,25 @@ public class Pokedex : MonoBehaviour {
 				break;
 			case 4:
 				move.Name = "Donnerschock";
-				move.damage = 80;
-				move.type1 = Type.Electric;
+				move.damage = 40;
+				move.type = Type.Electric;
+				move.category = MoveCategory.Special;
 				move.projectileType = MoveProjectileType.Ranged;
 				move.range = 100;
 				move.speed = 100;
 				move.castingTime = 2f;
+				move.cooldownTime = 3;
+				break;
+			case 5:
+				move.Name = "Flammenwerfer";
+				move.damage = 95;
+				move.type = Type.Fire;
+				move.category = MoveCategory.Special;
+				move.projectileType = MoveProjectileType.AttackerOrbit;
+				move.range = 30;
+				move.speed = 50;
+				move.castingTime = 2f;
+				move.cooldownTime = 3;
 				break;
 		}
 		
@@ -560,7 +634,8 @@ public class Pokedex : MonoBehaviour {
 		return move;
 	}
 	
-	void Update () {
-	
+	void Update ()
+	{
+		
 	}
 }

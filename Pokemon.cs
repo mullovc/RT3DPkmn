@@ -11,7 +11,7 @@ public class Pokemon : MonoBehaviour {
 	public float HP;
 	public float exp;
 	
-	public int expToNextLevel;
+	public float expToNextLevel;
 	
 	public float maxHP;
 	public float attack;
@@ -37,13 +37,55 @@ public class Pokemon : MonoBehaviour {
 		learnMove(1);
 	}
 	
+	public float getExpToNextLevel(float n)
+	{
+		float result = 0;
+		
+		if(stats.levelingSpeed == Pokedex.LevelingSpeed.Erratic)
+		{
+			if(n <= 50)
+				result = Mathf.Pow(n,3)*((100 - n)/50);
+			else if(n > 50 && n <= 68)
+				result = Mathf.Pow(n,3)*((150 - n)/100);
+			else if(n > 68 && n <= 98)
+				result = Mathf.Pow(n,3)*((1911 - 10 * n)/1500);
+			else if(n > 98 && n <= 100)
+				result = Mathf.Pow(n,3)*((160 - n)/100);
+		}
+		else if(stats.levelingSpeed == Pokedex.LevelingSpeed.Fast)
+		{
+			result = (4 * Mathf.Pow(n,3))/5;
+		}
+		else if(stats.levelingSpeed == Pokedex.LevelingSpeed.MediumFast)
+		{
+			result = Mathf.Pow(n,3);
+		}
+		else if(stats.levelingSpeed == Pokedex.LevelingSpeed.MediumSlow)
+		{
+			result = (6/5) * Mathf.Pow(n,3) - 15 * n*n + 100 * n - 140;
+		}
+		else if(stats.levelingSpeed == Pokedex.LevelingSpeed.Slow)
+		{
+			result = (5/4) * Mathf.Pow(n,3);
+		}
+		else if(stats.levelingSpeed == Pokedex.LevelingSpeed.Fluctuating)
+		{
+			if(n <= 15)
+				result = Mathf.Pow(n,3)*((((n+1)/3)+24)/50);
+			else if(n > 15 && n <= 36)
+				result = Mathf.Pow(n,3)*((n+14)/50);
+			else if(n > 36 && n <= 100)
+				result = Mathf.Pow(n,3)*(((n/2)+32)/50);
+		}
+		
+		return result;
+	}
+	
 	void levelUp()
 	{
 		level++;
-		if(expToNextLevel != 0)
-			exp = exp % expToNextLevel;
 		
-		expToNextLevel = (int)Mathf.Pow(level + 1,3);
+		expToNextLevel = (int)getExpToNextLevel(level + 1f);
 		
 		maxHP = (int)((2f * stats.HPBaseValue + 100f) * (level/100f) + 10f);
 		attack = (int)(2 * stats.attackBaseValue * (level / 100f) + 5f);

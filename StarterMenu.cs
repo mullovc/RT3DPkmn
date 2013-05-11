@@ -88,5 +88,6 @@ public class StarterMenu : MonoBehaviour {
 	
 	void Update ()
 	{
+		
 	}
 }

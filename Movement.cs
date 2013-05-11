@@ -47,6 +47,11 @@ public class Movement : MonoBehaviour {
 		disabledTime = duration;
 	}
 	
+	public void enable()
+	{
+		disabledTime = 0;
+	}
+	
 	
 	void dash()
 	{
