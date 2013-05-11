@@ -52,7 +52,8 @@ public class Pokedex : MonoBehaviour {
 		Dash,
 		Ranged,
 		RangedSeeking,
-		MeleeSeeking
+		MeleeSeeking,
+		AttackerOrbit
 	}
 	
 	public Stats pokedex(Stats pokemon,int index,bool yourself = true)
@@ -101,6 +102,13 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Glurak";
 				pokemon.type1 = Type.Fire;
 				pokemon.type2 = Type.Flying;
+				pokemon.HPBaseValue = 78;
+				pokemon.attackBaseValue = 84;
+				pokemon.defenseBaseValue = 78;
+				pokemon.specialAttackBaseValue = 109;
+				pokemon.specialDefenseBaseValue = 85;
+				pokemon.initiativeBaseValue = 100;
+				pokemon.EXPBaseValue = 206;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -141,6 +149,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 15;
+				pokemon.evolution[8] = 11;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -179,6 +188,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 15;
+				pokemon.evolution[8] = 14;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -226,12 +236,18 @@ public class Pokedex : MonoBehaviour {
 			case 25:
 				pokemon.Name = "Pikachu";
 				pokemon.type1 = Type.Electric;
+				pokemon.HPBaseValue = 35;
+				pokemon.attackBaseValue = 55;
+				pokemon.defenseBaseValue = 30;
+				pokemon.specialAttackBaseValue = 50;
+				pokemon.specialDefenseBaseValue = 40;
+				pokemon.initiativeBaseValue = 90;
+				pokemon.EXPBaseValue = 82;
 				pokemon.dashSpeed = 160;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 20;
 				pokemon.height = 3.3f;
-				pokemon.learnableMoves[1] = 2;
-				pokemon.learnableMoves[2] = 3;
+				pokemon.learnableMoves[1] = 4;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-4 * xAxisModifier,pokemon.height * 1.5f,-6);
@@ -244,6 +260,7 @@ public class Pokedex : MonoBehaviour {
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
 				pokemon.height = 15;
+				pokemon.learnableMoves[1] = 4;
 				if(yourself)
 				{
 					Camera.main.transform.position = new Vector3(-10 * xAxisModifier,pokemon.height * 1.5f,-10);
@@ -317,6 +334,13 @@ public class Pokedex : MonoBehaviour {
 				pokemon.Name = "Gengar";
 				pokemon.type1 = Type.Ghost;
 				pokemon.type2 = Type.Poison;
+				pokemon.HPBaseValue = 60;
+				pokemon.attackBaseValue = 65;
+				pokemon.defenseBaseValue = 60;
+				pokemon.specialAttackBaseValue = 130;
+				pokemon.specialDefenseBaseValue = 75;
+				pokemon.initiativeBaseValue = 110;
+				pokemon.EXPBaseValue = 190;
 				pokemon.dashSpeed = 300;
 				pokemon.dashDuration = 0.5f;
 				pokemon.walkSpeed = 40;
@@ -494,8 +518,8 @@ public class Pokedex : MonoBehaviour {
 				move.projectileType = MoveProjectileType.Dash;
 				move.range = 20;
 				move.speed = 1000;
-				move.cooldownTime = 2f;
 				move.castingTime = 0.33f;
+				move.cooldownTime = 2f;
 				break;
 			case 2:
 				move.Name = "Tackle";
@@ -504,8 +528,8 @@ public class Pokedex : MonoBehaviour {
 				move.projectileType = MoveProjectileType.Dash;
 				move.range = 30;
 				move.speed = 1000;
-				move.cooldownTime = 3;
 				move.castingTime = 0.5f;
+				move.cooldownTime = 3;
 				break;
 			case 3:
 				move.Name = "Spukball";
@@ -514,6 +538,16 @@ public class Pokedex : MonoBehaviour {
 				move.projectileType = MoveProjectileType.RangedSeeking;
 				move.range = 100;
 				move.speed = 25;
+				move.castingTime = 2f;
+				move.cooldownTime = 3;
+				break;
+			case 4:
+				move.Name = "Donnerschock";
+				move.damage = 80;
+				move.type1 = Type.Electric;
+				move.projectileType = MoveProjectileType.Ranged;
+				move.range = 100;
+				move.speed = 100;
 				move.castingTime = 2f;
 				break;
 		}

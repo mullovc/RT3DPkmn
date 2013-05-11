@@ -99,24 +99,24 @@ public class Controls : MonoBehaviour {
 	
 	void getWalkInput()
 	{
-		Vector3 movementDirection = Vector3.zero;
+		Vector3 walkDirection = Vector3.zero;
 		if(Input.GetKey("w"))
 		{
-			movementDirection += Vector3.forward;
+			walkDirection += Vector3.forward;
 		}
 		if(Input.GetKey("a"))
 		{
-			movementDirection += Vector3.left;
+			walkDirection += Vector3.left;
 		}
 		if(Input.GetKey("s"))
 		{
-			movementDirection += Vector3.back;
+			walkDirection += Vector3.back;
 		}
 		if(Input.GetKey("d"))
 		{
-			movementDirection += Vector3.right;
+			walkDirection += Vector3.right;
 		}
-		pokemon.movement.triggerMovement(movementDirection,pokemon.stats.walkSpeed,Time.deltaTime);
+		pokemon.movement.triggerWalk(walkDirection,pokemon.stats.walkSpeed,Time.deltaTime);
 	}
 	
 	void getAttackInput()

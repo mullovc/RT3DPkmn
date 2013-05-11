@@ -15,12 +15,12 @@ public class Move : MonoBehaviour {
 	
 	public float range;
 	public float speed;
+	public float duration;
 	
 	public float cooldownTime;
 	public float castingTime;
-	float timeScinceUse;
+	public float timeScinceUse;
 	bool casting;
-	Light castIndicator;																				//provisorisch
 	
 	public bool projectileIsActive;
 	public float projectileTimeLeft;
@@ -34,37 +34,37 @@ public class Move : MonoBehaviour {
 	
 	void Start ()
 	{
+		timeScinceUse = cooldownTime + 1.5f;
 		battle = Camera.main.GetComponent<Battle>();
-		castIndicator = GameObject.Find("CastIndicator " + pokemon.name).GetComponent<Light>();			//provisorisch
-		castIndicator.range = pokemon.stats.height / 2;													//provisorisch
 	}
 	
 	public void cast()
 	{
-		if(timeScinceUse > cooldownTime && !projectileIsActive && !casting)
+		if(timeScinceUse > (cooldownTime + castingTime) && !projectileIsActive)
 		{
-			castIndicator.intensity = 8;																//provisorisch
+			pokemon.movement.disable(castingTime);
 			timeScinceUse = 0;
 			casting = true;
+			battle.setCastIndicator(this);
 		}
 	}
 	
 	public void attack(Pokemon target)
 	{
-		projectile = Instantiate(projectile_prefab,transform.position,Quaternion.identity) as Projectile;
+		projectile = Instantiate(projectile_prefab,transform.position,pokemon.transform.rotation) as Projectile;
 		projectile.target = target;
+		projectile.attacker = pokemon;
 		projectile.model = model;
 		projectile.name = "Projectile";
-		projectileIsActive = true;
 		
-		Vector3 direction = target.transform.position - transform.position;
-		direction /= Mathf.Sqrt(direction.x * direction.x + direction.y * direction.y + direction.z * direction.z);
-		
+		Vector3 direction = (target.transform.position - transform.position).normalized;
+			
 		if(projectileType == Pokedex.MoveProjectileType.Dash)
 		{
 			pokemon.transform.parent.parent = projectile.transform;
 			projectile.movement.triggerDash(direction,speed,Mathf.Sqrt(2 * range / speed));
 			projectileTimeLeft = Mathf.Sqrt(2 * range / speed);
+			pokemon.movement.disable(projectileTimeLeft);
 		}
 		else if(projectileType == Pokedex.MoveProjectileType.Ranged)
 		{
@@ -76,6 +76,7 @@ public class Move : MonoBehaviour {
 			projectile.movement.triggerChase(target.transform,speed,range/speed);
 			projectileTimeLeft = range/speed;
 		}
+		projectileIsActive = true;
 	}
 	
 	void Update ()
@@ -107,7 +108,6 @@ public class Move : MonoBehaviour {
 		
 		if(casting && timeScinceUse > castingTime)
 		{
-			castIndicator.intensity = 0;																//provisorisch
 			casting = false;
 			battle.attack(pokemon,this);
 		}

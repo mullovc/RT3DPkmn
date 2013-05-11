@@ -8,11 +8,17 @@ public class Pokemon : MonoBehaviour {
 	public Pokedex pokedex;
 	
 	public int level;
-	public int exp;
-	public int HP;
+	public float HP;
+	public float exp;
 	
-	public int maxHP;
 	public int expToNextLevel;
+	
+	public float maxHP;
+	public float attack;
+	public float specialAttack;
+	public float defense;
+	public float specialDefense;
+	public float initiative;
 	
 	public Pokedex.StatusEffect status;
 	
@@ -31,25 +37,22 @@ public class Pokemon : MonoBehaviour {
 		learnMove(1);
 	}
 	
-	bool checkLevelUp()
-	{
-		if(exp >= expToNextLevel)
-		{
-			return true;
-		}
-		else
-			return false;
-	}
-	
 	void levelUp()
 	{
 		level++;
 		if(expToNextLevel != 0)
 			exp = exp % expToNextLevel;
 		
-		expToNextLevel = level * 10;		//provisorisch
-		maxHP = level * 10;					//provisorisch
-		HP = maxHP;
+		expToNextLevel = (int)Mathf.Pow(level + 1,3);
+		
+		maxHP = (int)((2f * stats.HPBaseValue + 100f) * (level/100f) + 10f);
+		attack = (int)(2 * stats.attackBaseValue * (level / 100f) + 5f);
+		specialAttack = (int)(2f * stats.specialAttackBaseValue * (level / 100f) + 5f);
+		defense = (int)(2f * stats.defenseBaseValue * (level / 100f) + 5f);
+		specialDefense = (int)(2f * stats.specialDefenseBaseValue * (level / 100f) + 5f);
+		initiative = (int)(2f * stats.initiativeBaseValue * (level / 100f) + 5f);
+		
+		HP = (int)maxHP;
 		
 		if(stats.learnableMoves[level] != 0)
 		{
@@ -75,7 +78,7 @@ public class Pokemon : MonoBehaviour {
 	
 	void evolve(int evolveTo)
 	{
-		//...
+		setStats(stats.evolution[level], true);
 	}
 	
 	public void setStats(int index,bool mySelf = false)
@@ -86,7 +89,7 @@ public class Pokemon : MonoBehaviour {
 	
 	void Update ()
 	{
-		if(checkLevelUp())
+		if(exp >= expToNextLevel)
 		{
 			levelUp();
 		}

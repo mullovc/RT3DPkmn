@@ -10,6 +10,14 @@ public class Stats : MonoBehaviour {
 	public float dashDuration;
 	public float height;
 	
+	public float HPBaseValue;
+	public float attackBaseValue;
+	public float specialAttackBaseValue;
+	public float defenseBaseValue;
+	public float specialDefenseBaseValue;
+	public float initiativeBaseValue;
+	public float EXPBaseValue;
+	
 	public int[] learnableMoves = new int[100];
 	public int[] evolution = new int[100];
 	

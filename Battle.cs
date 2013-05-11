@@ -7,17 +7,60 @@ public class Battle : MonoBehaviour {
 	public Pokemon myPokemon;
 	public Pokemon opponent;
 	
-	public GameObject opponent_prefab;
-	
 	public int myPokemonIndex;
 	public int enemyPokemonIndex;
+	
+	public int castIndicator;
+	
+	public GameObject opponent_prefab;
 	
 	void Start ()
 	{
 		loadBattleSetup();
 		myPokemon.setStats(myPokemonIndex,true);
-		//myPokemon.stats = pokedex.pokedex(myPokemon.stats,myPokemonIndex);
 		spawnEnemy(enemyPokemonIndex);
+	}
+	
+	void OnGUI()
+	{
+		float indicationDuration = 1.5f;
+		
+		if(castIndicator != -1)
+		{
+			Move move;
+			if(castIndicator < 5)
+				move = myPokemon.move[castIndicator];
+			else
+				move = opponent.move[castIndicator%5];
+			
+			if(move.timeScinceUse < indicationDuration)
+					GUI.Box(new Rect(Screen.width * 0.4f,25,Screen.width / 5,25),move.Name);
+			else
+				castIndicator = -1;
+		}
+	}
+	
+	public void setCastIndicator(Move move)
+	{
+		for(int i = 0; i < 10; i++)
+		{
+			if(i < 5)
+			{
+				if(myPokemon.move[i] == move)
+				{
+					castIndicator = i;
+					break;
+				}
+			}
+			if(i >= 5)
+			{
+				if(opponent.move[i%5] == move)
+				{
+					castIndicator = i;
+					break;
+				}
+			}
+		}
 	}
 	
 	void loadBattleSetup()
@@ -28,6 +71,16 @@ public class Battle : MonoBehaviour {
 			enemyPokemonIndex = GameObject.Find("Starter").GetComponent<StarterMenu>().enemyIndex;
 			Destroy(GameObject.Find("Starter"));
 		}
+	}
+	
+	float determineEffectiveness(Move move,Pokemon victim)
+	{
+		return 1;													//provisorisch
+	}
+	
+	float determineSTAB(Move move,Pokemon attacker)
+	{
+		return 1;													//provisorisch
 	}
 	
 	public void attack(Pokemon attacker,Move move)
@@ -48,11 +101,13 @@ public class Battle : MonoBehaviour {
 	
 	public void hit(Pokemon attacker,Pokemon defender,Move move)
 	{
-		int damage = move.damage + attacker.level - defender.level;					//provisorisch
+		float additionalEffects = determineEffectiveness(move,defender) * determineSTAB(move,attacker);
 		
-		defender.HP -= damage;
+		float damage = (((2f * attacker.level + 10f)/250f) * (attacker.attack/defender.defense) * move.damage + 2f) * additionalEffects;
 		
-		print(attacker.stats.Name + " dealt " + damage + " damage to " + defender.stats.Name + ", using " + move.Name);
+		defender.HP -= (int)damage;
+		
+		print(attacker.stats.Name + " dealt " + (int)damage + " damage to " + defender.stats.Name + ", using " + move.Name);
 		
 		if(defender.HP <= 0)
 			faint(attacker,defender);
@@ -63,10 +118,11 @@ public class Battle : MonoBehaviour {
 		Camera.main.GetComponent<CameraRotation>().lockOnEnemy = false;
 		loser.status = Pokedex.StatusEffect.Fainted;
 		
-		winner.exp += loser.level * 10;												//provisorisch
+		float gainedEXP = (loser.stats.EXPBaseValue * loser.level)/7;
+		winner.exp += (int)gainedEXP;
 		
 		print (loser.stats.Name + " fainted");
-		print (winner.stats.Name + " gained " + loser.level * 10 + " Exp");
+		print (winner.stats.Name + " gained " + (int)gainedEXP + " Exp");
 	}
 	
 	void spawnEnemy(int index)
@@ -76,7 +132,6 @@ public class Battle : MonoBehaviour {
 		{
 			opponent = enemy.GetComponentInChildren<Pokemon>();
 			opponent.setStats(index);
-			//opponent.stats = pokedex.pokedex(enemy.GetComponentInChildren<Stats>(),index,false);
 		}
 		else
 			Destroy(enemy);
@@ -89,7 +144,7 @@ public class Battle : MonoBehaviour {
 		if(opponent == null)
 		{
 			System.Random rand = new System.Random();
-			spawnEnemy(rand.Next(1,10000));
+			spawnEnemy(rand.Next(1,1000));
 		}
 	}
 }

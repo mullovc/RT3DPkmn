@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour {
 	
 	public GameObject model;
 	
-	//public Pokemon attacker;
+	public Pokemon attacker;
 	public Pokemon target;
 	public Movement movement;
 	
